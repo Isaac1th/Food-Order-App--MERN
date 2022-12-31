@@ -1,13 +1,3 @@
-// const mongoose = require('mongoose');
-
-// mongoose.connect('mongodb://localhost:27017', { useNewUrlParser: true }).catch((error) => {
-//   console.error('Connection error', e.message);
-// });
-
-// const db = mongoose.connection;
-
-// module.exports = db;
-
 import mongoose from 'mongoose';
 
 mongoose.set('strictQuery', true); // Remove deprecation warning

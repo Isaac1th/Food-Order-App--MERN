@@ -1,13 +1,15 @@
-import exress from 'express';
+import express from 'express';
 
-const router = express.router();
+const router = express.Router();
 
-import Product from '../model/productModel';
+import Product from '../model/productModel.js';
 
 router.get('/products', async (req, res) => {
   try {
+    const products = await Product.find();
+    res.status(200).send({ data: products });
   } catch (err) {
-    return console.log(err);
+    res.status(400).send({ error: err });
   }
 });
 

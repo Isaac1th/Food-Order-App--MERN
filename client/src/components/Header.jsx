@@ -15,21 +15,21 @@ const Header = () => {
             <img src={logo} alt="logo" className="w-40 h-40 object-cover" />
           </Link>
         </div>
-      </div>
-      <div className="nav-menu-wrapper flex items-center justify-between space-x-10">
-        <Link to="/" className="text-xl">
-          Home
-        </Link>
-        <Link to="#about" className="text-xl">
-          About
-        </Link>
-      </div>
-      <div className="flex items-center justify-center space-x-4">
-        <Link to="/cart">
-          <img src={cartIcon} alt="cart" />
-        </Link>
-        <Link to="/login">Log In</Link>
-        <Link to="/register">Sign Up</Link>
+        <div className="nav-menu-wrapper flex items-center justify-between space-x-10">
+          <Link to="/" className="text-xl">
+            Home
+          </Link>
+          <Link to="#about" className="text-xl">
+            About
+          </Link>
+        </div>
+        <div className="flex items-center justify-center space-x-4">
+          <Link to="/cart" className="mr-4 relative">
+            <img src={cartIcon} alt="cart" />
+          </Link>
+          <Link to="/login">Log In</Link>
+          <Link to="/register">Sign Up</Link>
+        </div>
       </div>
     </nav>
   );
