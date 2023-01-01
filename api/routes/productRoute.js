@@ -2,15 +2,13 @@ import express from 'express';
 
 const router = express.Router();
 
-import Product from '../model/productModel.js';
+import {
+  getProducts,
+  getProductByCategory,
+} from '../controllers/productController.js';
 
-router.get('/products', async (req, res) => {
-  try {
-    const products = await Product.find();
-    res.status(200).send({ data: products });
-  } catch (err) {
-    res.status(400).send({ error: err });
-  }
-});
+router.get('/products', getProducts);
+
+router.get('/products-by-categories', getProductByCategory);
 
 export default router;

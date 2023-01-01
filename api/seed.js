@@ -11,12 +11,9 @@ const main = async () => {
   try {
     await client.connect();
 
-    const productsCollection = client
-      .db('Food_Order_App')
-      .collection('products');
-    const categoriesCollection = client
-      .db('Food_Order_App')
-      .collection('categories');
+    const productsCollection = client.db('test').collection('products');
+
+    const categoriesCollection = client.db('test').collection('categories');
 
     let categories = ['breakfast', 'lunch', 'dinner', 'drinks'].map(
       (category) => {
@@ -36,7 +33,7 @@ const main = async () => {
       let newProduct = {
         name: faker.commerce.productName(),
         adjective: faker.commerce.productAdjective(),
-        desciption: faker.commerce.productDescription(),
+        description: faker.commerce.productDescription(),
         price: faker.commerce.price(),
         category: _.sample(categories),
         imageUrl: _.sample(imageUrls),

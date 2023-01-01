@@ -14,23 +14,23 @@ connectDB();
 
 const app = express();
 
-app.use('/api/', productRoutes);
-
-const corsOptions = {
-  origin: 'http://localhost:6000',
+var corsOptions = {
+  origin: 'http://localhost:3000',
 };
 
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use(express.json());
+
+const PORT = process.env.PORT || 6000;
+
 app.get('/', (req, res) => {
   res.json({ message: "Welcome to Isaac's Place" });
 });
 
-app.use(express.json());
-
-const PORT = process.env.PORT || 6000;
+app.use('/api/', productRoutes);
 
 app.listen(
   PORT,

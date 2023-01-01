@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
-const Schema = mongoose.Schema;
+// const Schema = mongoose.Schema;
 
-const CategorySchema = new Schema({
+const CategorySchema = mongoose.Schema({
   name: { type: String, required: true },
 });
 
-const ProductSchema = new Schema({
+const ProductSchema = mongoose.Schema({
   name: { type: String, required: true },
   adjective: { type: String, required: true },
   description: { type: String, required: true },
@@ -14,5 +14,6 @@ const ProductSchema = new Schema({
 });
 
 const Product = mongoose.model('Product', ProductSchema);
-
 export default Product;
+
+// module.exports = mongoose.model('Product', ProductSchema);
