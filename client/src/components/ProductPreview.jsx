@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import ProductPreviewCard from './ProductPreviewCard';
+// import axios from 'axios';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../stores/cart/cartSlice';
 
 const ProductPreview = () => {
   const [products, setProducts] = useState([]);
+  const dispatch = useDispatch();
 
   const responsive = {
     superLargeDesktop: {
@@ -31,7 +35,20 @@ const ProductPreview = () => {
       .then((response) => response.json())
       .then((data) => setProducts(data?.data))
       .catch((err) => console.log(err));
+
+    // axios
+    //   .get('http://localhost:6000/api/products')
+    //   .then((response) => response.json())
+    //   .then((data) => setProducts(data?.data))
+    //   .catch((err) => console.log(err))
+    //   .finally(function () {
+    //     // always executed
+    //   });
   }, []);
+
+  const onAddProduct = (product) => {
+    dispatch(addToCart(product));
+  };
 
   return (
     <div className="container mx-auto pb-4 w-2/3 text-white bg-black">
@@ -41,7 +58,11 @@ const ProductPreview = () => {
           products.map((product, index) => {
             return (
               <div className="w-full p-3">
-                <ProductPreviewCard key={index} product={product} />;
+                <ProductPreviewCard
+                  key={index}
+                  product={product}
+                  onAddProduct={onAddProduct}
+                />
               </div>
             );
           })}
