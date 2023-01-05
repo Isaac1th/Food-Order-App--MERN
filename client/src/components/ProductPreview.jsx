@@ -57,7 +57,7 @@ const ProductPreview = () => {
         {products.length > 0 &&
           products.map((product, index) => {
             return (
-              <div className="w-full p-3">
+              <div key={index} className="w-full p-3">
                 <ProductPreviewCard
                   key={index}
                   product={product}
