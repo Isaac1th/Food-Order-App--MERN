@@ -6,7 +6,11 @@ import { useDispatch } from 'react-redux';
 import { setAddress } from '../stores/userInfo/addressSlice';
 
 const AddressForm = ({ onTabSwitch }) => {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const dispatch = useDispatch();
 
   const onSubmit = (data) => {
@@ -25,17 +29,20 @@ const AddressForm = ({ onTabSwitch }) => {
       <div className="mb-4">
         <label
           className="block mb-2 text-sm font-bold text-gray-700"
-          for="streetAddress"
+          htmlFor="streetAddress"
         >
           Street Address
         </label>
         <input
-          {...register('address')}
+          {...register('address', { required: true })}
           className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
           id="street address"
           type="text"
           placeholder="Street Address"
         />
+        {errors.address && (
+          <span className="text-red-500">This field is required</span>
+        )}
       </div>
 
       {/* CITY */}
@@ -43,7 +50,7 @@ const AddressForm = ({ onTabSwitch }) => {
         <div className="mb-4 md:mr-2 md:mb-0 flex-1">
           <label
             className="block mb-2 text-sm font-bold text-gray-700"
-            for="city"
+            htmlFor="city"
           >
             City
           </label>
@@ -61,7 +68,7 @@ const AddressForm = ({ onTabSwitch }) => {
       <div className="mb-4 md:mr-2 md:mb-0 flex-1">
         <label
           className="block mb-2 text-sm font-bold text-gray-700"
-          for="state"
+          htmlFor="state"
         >
           State
         </label>
@@ -78,7 +85,7 @@ const AddressForm = ({ onTabSwitch }) => {
       <div className="mb-4 md:mr-2 md:mb-0 flex-1">
         <label
           className="block mb-2 text-sm font-bold text-gray-700"
-          for="country"
+          htmlFor="country"
         >
           Country
         </label>
@@ -95,7 +102,7 @@ const AddressForm = ({ onTabSwitch }) => {
       <div className="mb-4 md:mr-2 md:mb-0 flex-1">
         <label
           className="block mb-2 text-sm font-bold text-gray-700"
-          for="postalCode"
+          htmlFor="postalCode"
         >
           Postal Code
         </label>

@@ -5,14 +5,14 @@ const getClassName = ({ className }) => {
   return clsx('flex rounded-lg p-4 text-sm', className);
 };
 
-const variant = {
+const variants = {
   success: 'bg-green-100 text-green-700',
   danger: 'bg-red-100 text-red-700',
 };
 
-const Alert = ({ children, className, variant = 'success' }) => {
+export const Alert = ({ children, className, variant = 'success' }) => {
   return (
-    <div className={clsx(variant[variant], getClassName({ className }))}>
+    <div className={clsx(variants[variant], getClassName({ className }))}>
       <svg
         className="w-5 h-5 inline mr-3"
         fill="currentColor"

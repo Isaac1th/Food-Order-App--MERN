@@ -2,8 +2,37 @@ import React from 'react';
 import logo from '../assets/images/logo.png';
 import cartIcon from '../assets/icons/cart.svg';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import Button from './elements/Button';
+import { useState, useEffect } from 'react';
 
 const Header = ({ cartCount }) => {
+  const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleLogout = () => {
+    sessionStorage.removeItem('Auth token');
+    sessionStorage.removeItem('User Id');
+    navigate('/');
+  };
+
+  useEffect(() => {
+    const checkAuthToken = () => {
+      const token = sessionStorage.getItem('Auth token');
+      if (token) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+    };
+
+    window.addEventListener('storage', checkAuthToken);
+
+    return () => {
+      window.removeEventListener('storage', checkAuthToken);
+    };
+  });
+
   return (
     <nav id="header" className="bg-black text-white">
       <div className="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-2">
@@ -32,8 +61,14 @@ const Header = ({ cartCount }) => {
               </div>
             ) : null}
           </Link>
-          <Link to="/login">Log In</Link>
-          <Link to="/register">Sign Up</Link>
+          {isLoggedIn ? (
+            <Button onClick={handleLogout}>Logout</Button>
+          ) : (
+            <>
+              <Link to="/login">Log In</Link>
+              <Link to="/register">Sign Up</Link>
+            </>
+          )}
         </div>
       </div>
     </nav>

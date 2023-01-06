@@ -7,12 +7,11 @@ import colors from 'colors';
 import connectDB from './config/db.js';
 
 import productRoutes from './routes/productRoute.js';
+import userRoutes from './routes/userRoute.js';
 
 import Order from './models/orderModel.js';
 
 import Stripe from 'stripe';
-
-Stripe(process.env.STRIPE_SECRET_KEY);
 
 const stripe = new Stripe(
   'sk_test_51KmZiECvR3K38GnIJ9IrdfpiIKNagJCWqACTZ78cjWUhzlX1hje7eJ44ftHfwPMNiAKMzHXCAr4O4Jp22B86AQTx00Swc6yuyO'
@@ -70,7 +69,8 @@ app.post(
       event = stripe.webhooks.constructEvent(
         request.body,
         sig,
-        process.env.STRIPE_WEBHOOK_SECRET
+        'whsec_7bdd0e42515ec75bb6ea4a46d7794841734aea39355215b50e082bb83754d373'
+        // process.env.STRIPE_WEBHOOK_SECRET
       );
 
       console.log('test');
@@ -100,6 +100,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/', productRoutes);
+app.use('/api/', userRoutes);
 
 // -------------------------------------------------------
 
@@ -125,16 +126,13 @@ app.post('/create-payment-intent', async (req, res) => {
 
     await order.save();
 
-    // const paymentIntent = await stripe.paymentIntents.create({
-    //   amount: totalPrice,
-    //   currency: 'usd',
-    // });
-
     const paymentIntent = await stripe.paymentIntents.create({
       amount: 1099,
       currency: 'usd',
       payment_method_types: ['card'],
     });
+
+    console.log(paymentIntent.client_secret);
 
     res.send({
       clientSecret: paymentIntent.client_secret,
