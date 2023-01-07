@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import ProductPreviewCard from './ProductPreviewCard';
-// import axios from 'axios';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { useDispatch } from 'react-redux';
@@ -35,15 +34,6 @@ const ProductPreview = () => {
       .then((response) => response.json())
       .then((data) => setProducts(data?.data))
       .catch((err) => console.log(err));
-
-    // axios
-    //   .get('http://localhost:6000/api/products')
-    //   .then((response) => response.json())
-    //   .then((data) => setProducts(data?.data))
-    //   .catch((err) => console.log(err))
-    //   .finally(function () {
-    //     // always executed
-    //   });
   }, []);
 
   const onAddProduct = (product) => {
