@@ -3,7 +3,6 @@ import User from '../models/userModel.js';
 // @desc Fetch all products
 // @route GET /api/products
 // @access Public
-
 const createUser = () => {
   const user = new User({
     name: req.body.name,

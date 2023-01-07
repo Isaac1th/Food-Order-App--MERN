@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import Button from './elements/Button';
 import { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 const Header = ({ cartCount }) => {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const Header = ({ cartCount }) => {
   const handleLogout = () => {
     sessionStorage.removeItem('Auth token');
     sessionStorage.removeItem('User Id');
+    window.dispatchEvent(new Event('storage'));
     navigate('/');
   };
 

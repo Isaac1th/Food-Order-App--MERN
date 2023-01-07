@@ -13,14 +13,11 @@ import Order from './models/orderModel.js';
 
 import Stripe from 'stripe';
 
-const stripe = new Stripe(
-  'sk_test_51KmZiECvR3K38GnIJ9IrdfpiIKNagJCWqACTZ78cjWUhzlX1hje7eJ44ftHfwPMNiAKMzHXCAr4O4Jp22B86AQTx00Swc6yuyO'
-);
-// const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-
 dotenv.config();
 
 connectDB();
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
 
@@ -58,7 +55,7 @@ app.use(
 // This is your Stripe CLI webhook secret for testing your endpoint locally.
 
 app.post(
-  '/webhook',
+  '/api/webhook',
   express.raw({ type: 'application/json' }),
   (request, response) => {
     const sig = request.headers['stripe-signature'];
@@ -69,8 +66,7 @@ app.post(
       event = stripe.webhooks.constructEvent(
         request.body,
         sig,
-        'whsec_7bdd0e42515ec75bb6ea4a46d7794841734aea39355215b50e082bb83754d373'
-        // process.env.STRIPE_WEBHOOK_SECRET
+        process.env.STRIPE_WEBHOOK_SECRET
       );
 
       console.log('test');
@@ -102,14 +98,14 @@ app.get('/', (req, res) => {
 app.use('/api/', productRoutes);
 app.use('/api/', userRoutes);
 
-// -------------------------------------------------------
+// --------------------STRIPE CREATE PAYMENT INTENT-----------------------------------
 
-app.post('/create-payment-intent', async (req, res) => {
+app.post('/api/create-payment-intent', async (req, res) => {
   try {
     const { orderItems, shippingAddress, userId } = req.body;
-    console.log(shippingAddress);
 
     const totalPrice = calcOrderAmount(orderItems);
+    // const totalPrice = 5;
 
     const taxPrice = 0;
     const shippingPrice = 0;
@@ -127,9 +123,9 @@ app.post('/create-payment-intent', async (req, res) => {
     await order.save();
 
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: 1099,
+      amount: totalPrice,
       currency: 'usd',
-      payment_method_types: ['card'],
+      // payment_method_types: ['card'],
     });
 
     console.log(paymentIntent.client_secret);

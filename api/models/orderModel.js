@@ -15,7 +15,7 @@ const orderSchema = mongoose.Schema(
         price: { type: Number, required: true },
         product: {
           type: mongoose.Schema.Types.ObjectId,
-          required: true,
+          required: false,
           ref: 'Product',
         },
       },
@@ -23,7 +23,7 @@ const orderSchema = mongoose.Schema(
     shippingAddress: {
       address: { type: String, required: true },
       city: { type: String, required: true },
-      postalCode: { type: String, required: true },
+      postalCode: { type: String, required: false },
       country: { type: String, required: true },
     },
     paymentMethod: {
@@ -75,5 +75,3 @@ const orderSchema = mongoose.Schema(
 
 const Order = mongoose.model('Order', orderSchema);
 export default Order;
-
-// module.exports = mongoose.model('Order', orderSchema);

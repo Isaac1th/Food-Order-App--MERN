@@ -10,13 +10,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { clearCart, cartProducts } from '../stores/cart/cartSlice';
 import { getAddress, clearAddress } from '../stores/userInfo/addressSlice';
 import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Button from './elements/Button';
 
 const stripePromise = loadStripe(
-  'pk_test_51KmZiECvR3K38GnISYY284z2QF4fa2T1E1gfeWFbgGsMsU7KClNLnBhPr4o8m0IaSUTyQGL7r6fz4VuOvmfkof0500MkZBFrtQ'
+  'process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY'
 );
-// const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 
 export const StripeWrapper = () => {
   return (
@@ -98,8 +97,7 @@ const PaymentForm = () => {
         <CardElement id="card-element" />
       </div>
       <div className="flex justify-center p-2">
-        <Button variant="dark" type="submit" disbled={loading ? true : false}>
-          {/* {loading ? 'Loading...' : 'Pay Now'} */}
+        <Button variant="dark" type="submit" disabled={loading}>
           {loading ? 'Loading...' : 'Pay Now'}
         </Button>
       </div>

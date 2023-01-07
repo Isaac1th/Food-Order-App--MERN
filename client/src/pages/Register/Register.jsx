@@ -17,6 +17,7 @@ const Register = () => {
     setLoading(true);
     const authentication = getAuth();
     let uid = '';
+
     createUserWithEmailAndPassword(authentication, data.email, data.password)
       .then((response) => {
         uid = response.user.uid;
@@ -42,30 +43,30 @@ const Register = () => {
         email: data.email,
         name: data.name,
         _id: uid,
-      })
-        .then((response) => {
-          if (response.status === 200) {
-            setLoading(false);
-            toast.success('Account created successfully!', {
-              position: 'top-right',
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: 'dark',
-            });
-            navigate('/');
-          } else {
-            console.log(response.json());
-          }
-        })
-        .catch((error) => {
+      }),
+    })
+      .then((response) => {
+        if (response.status === 200 || response.status === 500) {
           setLoading(false);
-          console.log(error);
-        }),
-    });
+          toast.success('Account created successfully!', {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'dark',
+          });
+          navigate('/');
+        } else {
+          console.log(response.json());
+        }
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+      });
   };
 
   return (
@@ -122,12 +123,11 @@ const Register = () => {
                 className="block appearance-none w-full px-3 py-2 border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-gray-200 focus:border-gray-200"
               />
             </div>
-            <Button size="large">{loading ? 'loading' : 'Register'}</Button>
+            <Button size="large">{loading ? 'Loading...' : 'Register'}</Button>
           </form>
           <ToastContainer />
         </div>
       </div>
-      <form></form>
     </div>
   );
 };

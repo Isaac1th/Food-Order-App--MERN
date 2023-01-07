@@ -1,4 +1,3 @@
-import { current } from '@reduxjs/toolkit';
 import React, { useState, useEffect } from 'react';
 
 const useTabSwitch = (tab, defaultTab) => {

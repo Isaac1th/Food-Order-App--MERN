@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import Button from '../../components/elements/Button';
-import { app } from '../../firebase-config';
+import { app } from '../../firebase-config.js';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
@@ -17,6 +17,7 @@ const Login = () => {
     setLoading(true);
     const authentication = getAuth();
     let uid = '';
+
     signInWithEmailAndPassword(authentication, data.email, data.password)
       .then((response) => {
         uid = response.user.uid;
@@ -49,40 +50,6 @@ const Login = () => {
         }
         setLoading(false);
       });
-
-    // fetch('http://localhost:6000/api/create-payment-intent', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({
-    //     email: data.email,
-    //     name: data.name,
-    //     _id: uid,
-    //   })
-    //     .then((response) => {
-    //       if (response.status === 200) {
-    //         setLoading(false);
-    //         toast.success('Account created successfully!', {
-    //           position: 'top-right',
-    //           autoClose: 5000,
-    //           hideProgressBar: false,
-    //           closeOnClick: true,
-    //           pauseOnHover: true,
-    //           draggable: true,
-    //           progress: undefined,
-    //           theme: 'dark',
-    //         });
-    //         navigate('/');
-    //       } else {
-    //         console.log(response.json());
-    //       }
-    //     })
-    //     .catch((error) => {
-    //       setLoading(false);
-    //       console.log(error);
-    //     }),
-    // });
   };
 
   return (
