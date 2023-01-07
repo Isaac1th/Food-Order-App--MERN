@@ -51,7 +51,7 @@ const PaymentForm = () => {
         {
           method: 'POST',
           headers: {
-            'Content-type': 'application/json',
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             paymentMethodType: 'card',
@@ -60,11 +60,10 @@ const PaymentForm = () => {
             shippingAddress: address,
           }),
         }
-      ).then((r) => r.json());
+      ).then((res) => res.json());
 
       const { error: stripeError, paymentIntent } =
-        await stripe.confirmCardPayment({
-          clientSecret,
+        await stripe.confirmCardPayment(clientSecret, {
           payment_method: {
             card: elements.getElement(CardElement),
           },

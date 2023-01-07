@@ -1,4 +1,5 @@
 import express from 'express';
+import path from 'path';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -24,6 +25,8 @@ const app = express();
 var corsOptions = {
   origin: 'http://localhost:3000',
 };
+
+const __dirname = path.resolve();
 
 const calcOrderAmount = (orderItems) => {
   const initialValue = 0;
@@ -91,9 +94,9 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 6000;
 
-app.get('/', (req, res) => {
-  res.json({ message: "Welcome to Isaac's Place" });
-});
+// app.get('/', (req, res) => {
+//   res.json({ message: "Welcome to Isaac's Place" });
+// });
 
 app.use('/api/', productRoutes);
 app.use('/api/', userRoutes);
@@ -105,7 +108,7 @@ app.post('/api/create-payment-intent', async (req, res) => {
     const { orderItems, shippingAddress, userId } = req.body;
 
     const totalPrice = calcOrderAmount(orderItems);
-    // const totalPrice = 5;
+    // const totalPrice = 150;
 
     const taxPrice = 0;
     const shippingPrice = 0;
@@ -142,6 +145,13 @@ app.post('/api/create-payment-intent', async (req, res) => {
   }
 });
 
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '/client/build')));
+
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
+  );
+}
 // --------------------------------------------------------------------
 
 app.listen(
